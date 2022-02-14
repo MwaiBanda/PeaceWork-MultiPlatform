@@ -1,0 +1,6 @@
+target 'PeaceWork-iOS' do
+  use_frameworks!
+  platform :ios, '14.1'
+  pod 'PeaceWorkSDK', :path => '../PeaceWorkSDK'
+end
+

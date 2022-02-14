@@ -1,0 +1,16 @@
+PODS:
+  - PeaceWorkSDK (1.0.0)
+
+DEPENDENCIES:
+  - PeaceWorkSDK (from `../PeaceWorkSDK`)
+
+EXTERNAL SOURCES:
+  PeaceWorkSDK:
+    :path: "../PeaceWorkSDK"
+
+SPEC CHECKSUMS:
+  PeaceWorkSDK: cd1dd9f73b634ce64015d4f6ade9bbeb92a82e59
+
+PODFILE CHECKSUM: 9ad5b40587db77641c514b51eb09cecfe409596c
+
+COCOAPODS: 1.11.2

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>143536435560-85l48k95rno0bg4tuiuu0h8kkl29un6t.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.143536435560-85l48k95rno0bg4tuiuu0h8kkl29un6t</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC-Ec4ossvz2U5haFIAZ9Tbl7rwcIS4hgw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>143536435560</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>mwaibanda.PeaceWork-iosApp</string>
+	<key>PROJECT_ID</key>
+	<string>peacework-ad18b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>peacework-ad18b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:143536435560:ios:336148c93c7a56d41366dd</string>
+</dict>
+</plist>
