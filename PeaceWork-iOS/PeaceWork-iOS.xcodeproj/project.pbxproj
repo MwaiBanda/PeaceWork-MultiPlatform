@@ -20,7 +20,6 @@
 		814FF0E927B899DF00934DD4 /* ConservationCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814FF0E827B899DF00934DD4 /* ConservationCenterView.swift */; };
 		815661AB27B8BC3D000EE3AC /* Flow+Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815661AA27B8BC3D000EE3AC /* Flow+Publisher.swift */; };
 		8183315827B7C61700A26553 /* PeaceWork_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8183315727B7C61700A26553 /* PeaceWork_iOSApp.swift */; };
-		8183315A27B7C61700A26553 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8183315927B7C61700A26553 /* ContentView.swift */; };
 		8183315C27B7C61800A26553 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8183315B27B7C61800A26553 /* Assets.xcassets */; };
 		8183315F27B7C61800A26553 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8183315E27B7C61800A26553 /* Preview Assets.xcassets */; };
 		8190EC0927B9A3CC00375A8D /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 8190EC0827B9A3CC00375A8D /* Starscream */; };
@@ -104,7 +103,6 @@
 		815661AA27B8BC3D000EE3AC /* Flow+Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+Publisher.swift"; sourceTree = "<group>"; };
 		8183315427B7C61700A26553 /* PeaceWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeaceWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8183315727B7C61700A26553 /* PeaceWork_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeaceWork_iOSApp.swift; sourceTree = "<group>"; };
-		8183315927B7C61700A26553 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8183315B27B7C61800A26553 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8183315E27B7C61800A26553 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		81D4D70B27B7CE67007B55C3 /* View+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Swift.swift"; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 			isa = PBXGroup;
 			children = (
 				8183315727B7C61700A26553 /* PeaceWork_iOSApp.swift */,
-				8183315927B7C61700A26553 /* ContentView.swift */,
 				8183315B27B7C61800A26553 /* Assets.xcassets */,
 				81D4D7B827B7CE79007B55C3 /* GoogleService-Info.plist */,
 				81D4D70827B7CE67007B55C3 /* iOSMain */,
@@ -757,7 +754,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8183315A27B7C61700A26553 /* ContentView.swift in Sources */,
 				81D4D78827B7CE67007B55C3 /* SignUpUseCase.swift in Sources */,
 				81D4D7B527B7CE67007B55C3 /* ReelCardView.swift in Sources */,
 				81D4D78527B7CE67007B55C3 /* JobType.swift in Sources */,

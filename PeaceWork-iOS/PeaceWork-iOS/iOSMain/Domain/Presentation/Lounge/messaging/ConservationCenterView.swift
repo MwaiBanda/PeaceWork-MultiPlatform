@@ -60,16 +60,20 @@ struct ConservationCenterView: View {
                 Divider()
                     .padding(.bottom, 10)
             }
-        }.onFirstAppear {
+        }.onAppear {
+            DispatchQueue.main.async {
             messagingViewModel.getAllMessages(conversationID: conversation.id) {
                 messagingViewModel.initiateConversation(conversationId: conversation.id, username: session.currentUser?.userID ?? "") {
                     
                 }
             }
+            }
         }
         .onDisappear(perform: {
+            DispatchQueue.main.async {
             messagingViewModel.socket.disconnect()
             messagingViewModel.updateConversationMessages(conversationId: conversation.id, messages: messagingViewModel.messages)
+            }
         })
         .background(Color(hex: Constants.OffWhiteHex).ignoresSafeArea(.all))
         .toolbar {

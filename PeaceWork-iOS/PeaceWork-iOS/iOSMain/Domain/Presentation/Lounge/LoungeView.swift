@@ -109,7 +109,9 @@ struct LoungeView: View {
                         HStack(alignment: .center) {
 
                         VStack(alignment: .leading) {
-                            Text(i.lastSent.username)
+                            Text(i.participants.first(where: { i in
+                                return i.id != session.currentUser?.userID ?? ""
+                            })?.username ?? "")
                                 .fontWeight(.heavy)
                                 .foregroundColor(Color(hex: 0x333333))
                             Text(i.lastSent.message)
@@ -148,7 +150,6 @@ struct LoungeView: View {
             Spacer()
         }.onFirstAppear {
                 DispatchQueue.main.async {
-                    if conversations.isEmpty {
                         viewModel.getUserConversationsById(id: session.currentUser?.userID ?? "") { jobs, err in
                             if err != nil {
                                 print(err?.localizedDescription ?? "")
@@ -156,7 +157,7 @@ struct LoungeView: View {
                                 self.conversations = jobs ?? []
                             }
                         }
-                    }
+                    
                 }
             }
         }
