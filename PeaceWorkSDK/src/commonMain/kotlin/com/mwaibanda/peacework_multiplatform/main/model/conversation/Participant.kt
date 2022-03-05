@@ -3,7 +3,7 @@ package com.mwaibanda.peacework_multiplatform.main.model.conversation
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Member(
-    val id: String,
+data class Participant(
+    val userId: String,
     val username: String
 )

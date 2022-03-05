@@ -6,6 +6,7 @@ import com.mwaibanda.peacework_multiplatform.data.remote.JobsRepositoryImpl
 import com.mwaibanda.peacework_multiplatform.data.remote.MessagingRepositoryImpl
 import com.mwaibanda.peacework_multiplatform.data.remote.UserRepositoryImpl
 import com.mwaibanda.peacework_multiplatform.main.usecase.conversations.GetUserConversationsByIdUseCase
+import com.mwaibanda.peacework_multiplatform.main.usecase.conversations.UpdateLastSentUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.jobs.*
 import com.mwaibanda.peacework_multiplatform.main.usecase.messaging.*
 import com.mwaibanda.peacework_multiplatform.main.usecase.users.DeleteUserUseCase
@@ -24,6 +25,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
+import kotlin.math.sin
 import kotlin.time.Duration.Companion.minutes
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
@@ -98,6 +100,7 @@ val useCasesModule: Module = module {
     single { DeleteJobUseCase(get()) }
     /* CONVERSATION USE CASES */
     single { GetUserConversationsByIdUseCase(get()) }
+    single { UpdateLastSentUseCase(get()) }
     /* MESSAGING USE CASES */
     single { GetAllConversationMessagesUseCase(get()) }
     single { JoinConversationUseCase(get()) }

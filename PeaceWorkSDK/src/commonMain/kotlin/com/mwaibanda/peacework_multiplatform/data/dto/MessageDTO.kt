@@ -7,16 +7,17 @@ import kotlinx.serialization.Serializable
 data class MessageDTO(
     val id: String,
     val text: String,
-    val username: String,
+    val userId: String,
     val timestamp: Long,
+    val date: String,
     val conversationId: String
 ) {
     fun toMessage(): Message {
         return Message(
             id = id,
             text = text,
-             username = username,
-             formattedTime = timestamp,
+            userId = userId,
+             formattedTime = date,
          conversationId = conversationId
         )
     }

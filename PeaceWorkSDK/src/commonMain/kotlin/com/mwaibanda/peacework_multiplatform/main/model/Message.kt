@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Message(
     val id: String,
     val text: String,
-    val username: String,
-    val formattedTime: Long,
+    val userId: String,
+    val formattedTime: String,
     val conversationId: String
 )

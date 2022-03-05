@@ -8,8 +8,7 @@
 import SwiftUI
 import PeaceWorkSDK
 struct LoungeView: View {
-    @StateObject var viewModel = LoungeViewModel()
-    @State var conversations = [Conversation]()
+    @StateObject var loungeViewModel = LoungeViewModel()
     @EnvironmentObject var session: Session
     var body: some View {
         VStack {
@@ -97,29 +96,33 @@ struct LoungeView: View {
                 
             }
             Divider()
-            ForEach(conversations, id: \.id){ i in
+            ForEach(loungeViewModel.conversations, id: \.id){ conversation in
                 NavigationLink {
-                    ConservationCenterView(conversation: i)
+                    ConservationCenterView(loungeViewModel: loungeViewModel, conversation: conversation)
                 } label: {
                     
-                    HStack {
+                    HStack(alignment: .center) {
                         Circle()
                             .frame(width: 72, height: 72)
                             .foregroundColor(Color(.lightGray))
-                        HStack(alignment: .center) {
 
                         VStack(alignment: .leading) {
-                            Text(i.participants.first(where: { i in
-                                return i.id != session.currentUser?.userID ?? ""
+                            Text(conversation.participants.first(where: { participant in
+                                return participant.userId != session.currentUser?.userID ?? ""
                             })?.username ?? "")
                                 .fontWeight(.heavy)
                                 .foregroundColor(Color(hex: 0x333333))
-                            Text(i.lastSent.message)
+                            Text(conversation.lastSent.message)
                                 .foregroundColor(.gray)
+                                .multilineTextAlignment(.leading)
+                                .lineLimit(3)
                             
                         }
                     
                         Spacer()
+                        VStack {
+                            Spacer()
+
                         HStack {
                             Circle()
                                 .frame(width: 10, height: 10)
@@ -137,8 +140,11 @@ struct LoungeView: View {
                                 .stroke(Color.gray, lineWidth: 1.5)
                            )
                         .padding(.leading, 1)
-                        .padding(.bottom)
+                        .scaleEffect(0.8)
+                            Spacer()
+
                         }
+                        
                     }
                     .padding(.horizontal)
                 }
@@ -150,13 +156,7 @@ struct LoungeView: View {
             Spacer()
         }.onFirstAppear {
                 DispatchQueue.main.async {
-                        viewModel.getUserConversationsById(id: session.currentUser?.userID ?? "") { jobs, err in
-                            if err != nil {
-                                print(err?.localizedDescription ?? "")
-                            } else {
-                                self.conversations = jobs ?? []
-                            }
-                        }
+                    loungeViewModel.fetchConversations(id: session.currentUser?.userID ?? "")
                     
                 }
             }

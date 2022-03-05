@@ -7,6 +7,7 @@ import com.mwaibanda.peacework_multiplatform.main.model.conversation.LastSent
 import io.github.reactivecircus.cache4k.Cache
 import io.ktor.client.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 
@@ -19,7 +20,7 @@ class ConversationRepositoryImpl(
         val cachedConversations: List<Conversation> = cache.get(CONVERSATIONS_KEY).orEmpty()
         if (cachedConversations.isNotEmpty()) return cachedConversations
         val remoteConversations: List<Conversation> =  httpClient.get {
-            peaceWorkAPI("$CONVERSATIONS_ENDPOINT/$id?userId=$id")
+            peaceWorkAPI("$CONVERSATIONS_ENDPOINT?userId=$id")
         }
         cache.put(CONVERSATIONS_KEY, remoteConversations)
         return remoteConversations
@@ -34,14 +35,17 @@ class ConversationRepositoryImpl(
     }
 
     override suspend fun updateLastSent(conversationId: String, lastSent: LastSent) {
-        val response: HttpResponse = httpClient.put {
-            peaceWorkAPI(CONVERSATIONS_ENDPOINT)
-            parameter("conversationId", conversationId)
-            parameter("isSeen", lastSent.isSeen)
-            parameter("message", lastSent.message)
-            parameter("lastSentDate", lastSent.lastSentDate)
-            parameter("userId", lastSent.userId)
-        }
+        httpClient.submitForm<HttpResponse>(
+            url = "$BASE_CONVERSATIONS_ENDPOINT/last-sent/$conversationId",
+            formParameters = Parameters.build {
+                append("conversationId", conversationId)
+                append("isSeen", "${lastSent.isSeen}")
+                append("message", lastSent.message)
+                append("lastSentDate", lastSent.lastSentDate)
+                append("userId", lastSent.userId)
+
+            }
+        ) { method = HttpMethod.Put }
     }
 
     override suspend fun deleteConversation(conversationId: String) {

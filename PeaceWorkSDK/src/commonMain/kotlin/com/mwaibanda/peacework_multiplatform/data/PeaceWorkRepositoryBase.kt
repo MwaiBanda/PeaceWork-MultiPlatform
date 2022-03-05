@@ -23,6 +23,7 @@ open class PeaceWorkRepositoryBase {
         const val USERS_ENDPOINT = "$BASE_URL/users"
         const val JOBS_ENDPOINT = "$BASE_URL/jobs"
         const val CONVERSATIONS_ENDPOINT = "/conversations"
+        const val BASE_CONVERSATIONS_ENDPOINT = "$BASE_URL/conversations"
         const val MESSAGING_ENDPOINT = "/message"
 
         fun HttpRequestBuilder.peaceWorkAPI(path: String, urlType: URLType = URLType.Http) {
