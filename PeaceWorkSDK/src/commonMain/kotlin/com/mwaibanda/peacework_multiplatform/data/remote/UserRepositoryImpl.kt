@@ -2,18 +2,25 @@ package com.mwaibanda.peacework_multiplatform.data.remote
 
 import com.mwaibanda.peacework_multiplatform.data.PeaceWorkRepositoryBase
 import com.mwaibanda.peacework_multiplatform.main.model.Job
-import com.mwaibanda.peacework_multiplatform.main.model.User
+import com.mwaibanda.peacework_multiplatform.main.model.user.User
 import com.mwaibanda.peacework_multiplatform.main.repository.UserRepository
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.serialization.encodeValue
+import com.russhwolf.settings.serialization.nullableSerializedValue
 import io.github.reactivecircus.cache4k.Cache
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalSettingsApi
+@ExperimentalSerializationApi
 class UserRepositoryImpl(
     private val httpClient: HttpClient,
-    private val cache: Cache<String, List<Job>>
+    private val cache: Settings
 ): UserRepository, PeaceWorkRepositoryBase() {
     override suspend fun postUser(
         createdOn: String,
@@ -24,22 +31,30 @@ class UserRepositoryImpl(
         position: String,
         dateStarted: String
     ) {
-        httpClient.submitForm<HttpResponse>(
-            url = USERS_ENDPOINT,
-            formParameters = Parameters.build {
-                append("createdOn", createdOn)
-                append("fullname", fullname)
-                append("email", email)
-                append("userID", userID)
-                append("position", position)
-                append("dateStarted", dateStarted)
-            }
-        )
+        httpClient.post<HttpResponse> {
+            peaceWorkAPI("/users")
+            contentType(ContentType.Application.Json)
+            body = User(
+                createdOn = createdOn,
+                fullname = fullname,
+                email = email,
+                userID = userID,
+                company = company,
+                position = position,
+                dateStarted = dateStarted,
+                contacts = emptyList()
+            )
+        }
     }
     override suspend fun getUserProfile(userID: String): User {
+        val cachedJobs: User?  by cache.nullableSerializedValue(User.serializer(), PROFILE_KEY)
+
+        if (cachedJobs != null) return cachedJobs as User
         val profile: User = httpClient.get {
             peaceWorkAPI("/users/$userID")
         }
+        cache.encodeValue(User.serializer(), PROFILE_KEY, profile)
+
         return profile
     }
 

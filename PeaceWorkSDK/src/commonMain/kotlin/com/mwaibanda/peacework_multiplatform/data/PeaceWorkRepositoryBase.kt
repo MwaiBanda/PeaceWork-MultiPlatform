@@ -17,6 +17,7 @@ open class PeaceWorkRepositoryBase {
         private const val BASE_URL = "http://10.0.0.55:8080"
         private const val BASE_WEBSOCKETS_URL = "ws://10.0.0.55:8080"
         /* KEYS */
+        const val PROFILE_KEY = "PROFILE"
         const val JOBS_KEY = "JOBS"
         const val CONVERSATIONS_KEY = "CONVERSATIONS"
         /* ENDPOINTS */

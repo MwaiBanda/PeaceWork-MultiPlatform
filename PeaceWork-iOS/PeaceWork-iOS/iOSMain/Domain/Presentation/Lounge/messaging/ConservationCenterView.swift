@@ -10,10 +10,18 @@ import PeaceWorkSDK
 
 struct ConservationCenterView: View {
     @State private var message: String = ""
-    @ObservedObject var loungeViewModel: LoungeViewModel
+    @ObservedObject var conversationViewModel: ConversationViewModel
     @StateObject private var messagingViewModel = MessagingViewModel()
     @EnvironmentObject var session: Session
     var conversation: Conversation
+    var initials: (String) -> (firstInitial: String, lastInitial: String) = { username in
+        return (firstInitial: String(username.split(separator: " ").first?.first ?? "\t"), lastInitial: String(username.split(separator: " ").last?.first ?? "\t"))
+    }
+    var participant: ( [Participant], String) -> Participant? = { participants, userID in
+        return participants.first(where: { participant in
+            return participant.userId != userID
+        })
+    }
     var body: some View {
         VStack(spacing: 0) {
             Divider()
@@ -52,7 +60,7 @@ struct ConservationCenterView: View {
                     Button {
                         messagingViewModel.sentText(message: message) { clearText in
                             DispatchQueue.main.async {
-                                loungeViewModel.updateLastSent(conversationId: conversation.id, lastSent: LastSent.init(userId: session.currentUser?.userID ?? "", message: message, lastSentDate: SessionTime.sharedInstance.getTime(format: .yyyy_dd_MM_hh_mm), isSeen: false))
+                                conversationViewModel.updateLastSent(conversationId: conversation.id, lastSent: LastSent.init(userId: session.currentUser?.userID ?? "", message: message, lastSentDate: SessionTime.sharedInstance.getTime(format: .yyyy_dd_MM_hh_mm), isSeen: false))
                                 message = clearText
                             }
                         }
@@ -80,17 +88,26 @@ struct ConservationCenterView: View {
             DispatchQueue.main.async {
                 messagingViewModel.socket.disconnect()
                 messagingViewModel.updateConversationMessages(conversationId: conversation.id, messages: messagingViewModel.messages)
-                loungeViewModel.clearConversations()
-                loungeViewModel.fetchConversations(id: session.currentUser?.userID ?? "")
+                conversationViewModel.clearConversations()
+                conversationViewModel.fetchConversations(id: session.currentUser?.userID ?? "")
             }
         })
         .background(Color(hex: Constants.OffWhiteHex).ignoresSafeArea(.all))
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
                 HStack(alignment: .center) {
-                    Circle()
-                        .frame(width: 55, height: 55)
-                        .foregroundColor(Color( .lightGray))
+                    ZStack {
+                        Circle()
+                            .frame(width: 55, height: 55)
+                            .foregroundColor(Color(hex: Constants.DarkBlueHex))
+                        
+                        VStack {
+                            Text("\(initials((participant(conversation.participants, session.currentUser?.userID ?? "" )?.username ?? "")).firstInitial)\(initials((participant(conversation.participants, session.currentUser?.userID ?? "" )?.username ?? "")).lastInitial)" )
+                                .foregroundColor(.white)
+                                .fontWeight(.heavy)
+                                .font(.title2)
+                        }
+                    }
                     HStack(alignment: .firstTextBaseline) {
                         VStack(alignment: .leading){
                             Text(conversation.participants.first(where: { i in

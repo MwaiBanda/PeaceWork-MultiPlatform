@@ -10,7 +10,7 @@ import SwiftUI
 struct SignupView: View {
     var onSignupSuccess: (Bool) -> Void
     @StateObject private var authViewModel = AuthViewModel()
-    @StateObject var viewModel = LoungeViewModel()
+    @StateObject var viewModel = ConversationViewModel()
     @State private var isExpanded = false
     @State private var isExpanded2 = false
 
@@ -43,15 +43,15 @@ struct SignupView: View {
               
                     
             VStack{
-                DefaultTextfield(title: "Fullname", icon: "person", text: session.$fullname)
+                DefaultTextfield(title: "Fullname", icon: "person", text: $session.fullname)
                     .padding()
             Divider()
-            DefaultTextfield(title: "Email", icon: "envelope", text: session.$email)
+            DefaultTextfield(title: "Email", icon: "envelope", text: $session.email)
                     .padding()
             Divider()
                 PasswordTextfield(password: session.$password, placeholder: "Password", onCommit: {})
             Divider()
-                DefaultTextfield(title: "Phone", icon: "phone", text: session.$phone)
+                DefaultTextfield(title: "Phone", icon: "phone", text: $session.phone)
                     .padding()
             Divider()
             }.background(Color(hex: Constants.OffWhiteHex).ignoresSafeArea(.all)).tag(0)
@@ -121,11 +121,7 @@ struct SignupView: View {
                                     company: session.company,
                                     position: session.currentPosition,
                                     dateStarted: session.dateStarted
-                                ) { _, err in
-                                    if err != nil {
-                                        print(err?.localizedDescription ?? "")
-                                    }
-                                }
+                                )
                             }
                         }
                         }
@@ -187,11 +183,7 @@ struct SignupView: View {
                                     company: session.company,
                                     position: session.currentPosition,
                                     dateStarted: session.dateStarted
-                                ) { _, err in
-                                    if err != nil {
-                                        print(err?.localizedDescription ?? "")
-                                    }
-                                }
+                                )
                             }
                         }
                         }
@@ -222,11 +214,7 @@ struct SignupView: View {
                             company: session.company,
                             position: session.currentPosition,
                             dateStarted: session.dateStarted
-                        ) { _, err in
-                            if err != nil {
-                                print(err?.localizedDescription ?? "")
-                            }
-                        }
+                        )
                     }
                 }
                 } else {

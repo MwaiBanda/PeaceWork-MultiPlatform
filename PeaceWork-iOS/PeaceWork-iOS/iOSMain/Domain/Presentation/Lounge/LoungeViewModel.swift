@@ -1,27 +1,24 @@
 //
 //  LoungeViewModel.swift
-//  PeaceWork-iosApp
+//  PeaceWork-iOS
 //
-//  Created by Mwai Banda on 1/1/22.
-//  Copyright © 2022 orgName. All rights reserved.
+//  Created by Mwai Banda on 3/5/22.
 //
 
 import Foundation
 import PeaceWorkSDK
 
-class LoungeViewModel: ConversationController, ObservableObject {
-    @Published var conversations = [Conversation]()
-
+final class LoungeViewModel: UserController, ObservableObject {
+    @Published var profile: User? = nil
+    @Published var contacts = [Contact]()
     override init() {
         super.init()
     }
-    func fetchConversations(id: String) {
-        getUserConversationsById(id: id) { [weak self] jobs, err in
-                if err != nil {
-                    print(err?.localizedDescription ?? "")
-                } else {
-                    self?.conversations = jobs ?? []
-                }
-            }
+    func fetchProfile(userID: String, onCompletion: @escaping (String) -> Void){
+        getUserProfile(userID: userID) { [weak self] user in
+            self?.profile = user
+            self?.contacts = user.contacts
+            onCompletion(userID)
+        }
     }
 }

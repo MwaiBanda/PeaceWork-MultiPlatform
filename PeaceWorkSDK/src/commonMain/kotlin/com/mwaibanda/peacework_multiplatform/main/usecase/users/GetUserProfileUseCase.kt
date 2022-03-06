@@ -1,6 +1,6 @@
 package com.mwaibanda.peacework_multiplatform.main.usecase.users
 
-import com.mwaibanda.peacework_multiplatform.main.model.User
+import com.mwaibanda.peacework_multiplatform.main.model.user.User
 import com.mwaibanda.peacework_multiplatform.main.repository.UserRepository
 
 class GetUserProfileUseCase(

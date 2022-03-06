@@ -1,10 +1,14 @@
 package com.mwaibanda.peacework_multiplatform.features
 
-import com.mwaibanda.peacework_multiplatform.main.model.User
+import com.mwaibanda.peacework_multiplatform.main.model.user.User
 import com.mwaibanda.peacework_multiplatform.main.usecase.users.DeleteUserUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.users.GetUserProfileUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.users.PostUserUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.users.UpdateUserProfileUseCase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.serialization.UseSerializers
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -13,11 +17,14 @@ open class UserController: KoinComponent {
     private val getUserProfileUseCase: GetUserProfileUseCase by inject()
     private val updateUserProfileUseCase: UpdateUserProfileUseCase by inject()
     private val deleteUserUseCase: DeleteUserUseCase by inject()
+    private val scope = MainScope()
 
-    suspend fun getUserProfile(userID: String): User {
-        return getUserProfileUseCase(userID)
+    fun getUserProfile(userID: String, onCompletion: (User) -> Unit) {
+        scope.launch {
+            onCompletion(getUserProfileUseCase(userID))
+        }
     }
-    suspend fun postNewUser(
+    fun postNewUser(
         createdOn: String,
         fullname: String,
         email: String,
@@ -26,7 +33,9 @@ open class UserController: KoinComponent {
         position: String,
         dateStarted: String
     ){
-        postUserUseCase(createdOn, fullname, email, userID, company, position, dateStarted)
+        scope.launch {
+            postUserUseCase(createdOn, fullname, email, userID, company, position, dateStarted)
+        }
     }
     suspend fun updateUser(
         createdOn: String,

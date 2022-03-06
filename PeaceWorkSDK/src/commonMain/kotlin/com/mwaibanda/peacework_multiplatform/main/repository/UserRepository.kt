@@ -1,6 +1,6 @@
 package com.mwaibanda.peacework_multiplatform.main.repository
 
-import com.mwaibanda.peacework_multiplatform.main.model.User
+import com.mwaibanda.peacework_multiplatform.main.model.user.User
 
 interface UserRepository {
     suspend fun getUserProfile(userID: String): User

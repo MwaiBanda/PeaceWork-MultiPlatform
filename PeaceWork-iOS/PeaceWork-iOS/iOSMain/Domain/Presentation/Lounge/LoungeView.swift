@@ -9,7 +9,19 @@ import SwiftUI
 import PeaceWorkSDK
 struct LoungeView: View {
     @StateObject var loungeViewModel = LoungeViewModel()
+    @StateObject var conversationViewModel = ConversationViewModel()
     @EnvironmentObject var session: Session
+    var username: (String) -> (firstname: String, lastInitial: String) = { username in
+        return (firstname: String(username.prefix(while: { return $0 != " " })), lastInitial: String(username.split(separator: " ").last?.first ?? "\t"))
+    }
+    var initials: (String) -> (firstInitial: String, lastInitial: String) = { username in
+        return (firstInitial: String(username.split(separator: " ").first?.first ?? "\t"), lastInitial: String(username.split(separator: " ").last?.first ?? "\t"))
+    }
+    var participant: ( [Participant], String) -> Participant? = { participants, userID in
+        return participants.first(where: { participant in
+            return participant.userId != userID
+        })
+    }
     var body: some View {
         VStack {
             HStack(alignment: .lastTextBaseline) {
@@ -23,8 +35,8 @@ struct LoungeView: View {
                         .font(.title)
                         .fontWeight(.heavy)
                         .foregroundColor(Color(hex: 0x333333))
-
-
+                    
+                    
                 }
                 .padding(.leading)
                 Spacer()
@@ -44,29 +56,70 @@ struct LoungeView: View {
                             .foregroundColor(Color(hex: Constants.DarkBlueHex))
                             .padding(.horizontal)
                     }.offset(x: 15)
-                Button(action: {}){
-                    Image(systemName: "slider.horizontal.3")
-                        .imageScale(.large)
-                        .foregroundColor(Color(hex: Constants.DarkBlueHex))
-                        .padding(.horizontal)
-                }
+                    Button(action: {}){
+                        Image(systemName: "slider.horizontal.3")
+                            .imageScale(.large)
+                            .foregroundColor(Color(hex: Constants.DarkBlueHex))
+                            .padding(.horizontal)
+                    }
                 }
             }
             ScrollView(.horizontal, showsIndicators: false){
                 HStack {
-                    ForEach(0..<10){ i in
-                        VStack {
-                            Circle()
-                                .frame(width: 82, height: 82)
-                                .foregroundColor(Color(.lightGray))
-                            Text("User")
-                                .foregroundColor(Color(hex: 0x333333))
-                                .fontWeight(.medium)
-
-
+                    ForEach(loungeViewModel.contacts, id: \.self){ contact in
+                        Menu {
+                            Button {
+                                DispatchQueue.main.async {
+                                    conversationViewModel.joinConversation(participants: (firstUsername: session.fullname, firstUserID: session.currentUser?.userID ?? "", SecondUsername: contact.username, SecondUserID: contact.userID)) {
+                                       
+                                    } }} label: {
+                                        HStack {
+                                            Text("Message")
+                                            Spacer()
+                                            Image(systemName: "envelope")
+                                        }
+                                    }
+                            Button { } label: {
+                                HStack {
+                                    Text("View Profile")
+                                    Spacer()
+                                    Image(systemName: "person.badge.plus")
+                                }
+                            }
+                            Button { } label: {
+                                HStack {
+                                    Text("Remove Contact")
+                                    Spacer()
+                                    Image(systemName: "trash")
+                                        .foregroundColor(.red)
+                                }
+                            }
+                        } label: {
+                            VStack {
+                                
+                                ZStack {
+                                    Circle()
+                                        .frame(width: 72, height: 72)
+                                        .foregroundColor(Color(hex: Constants.DarkBlueHex))
+                                    
+                                    VStack {
+                                        Text("\(initials(contact.username).firstInitial )\(initials(contact.username).lastInitial)" )
+                                            .foregroundColor(.white)
+                                            .fontWeight(.heavy)
+                                            .font(.title)
+                                    }
+                                }
+                                Text("\(username(contact.username).firstname) \(username(contact.username).lastInitial).")
+                                    .foregroundColor(Color(hex: 0x333333))
+                                    .fontWeight(.medium)
+                                
+                                
+                            }
                         }
                         
-
+                        
+                        
+                        
                     }
                 }
                 .padding(.horizontal, 10)
@@ -79,7 +132,7 @@ struct LoungeView: View {
                     Text("Messages")
                         .font(.title)
                         .fontWeight(.heavy)
-                        .foregroundColor(Color(hex: 0x5A5A5A))
+                        .foregroundColor(Color(hex: 0x333333))
                     Text("Recents")
                         .font(.title2)
                         .fontWeight(.bold)
@@ -96,20 +149,27 @@ struct LoungeView: View {
                 
             }
             Divider()
-            ForEach(loungeViewModel.conversations, id: \.id){ conversation in
+            ForEach(conversationViewModel.conversations, id: \.id){ conversation in
                 NavigationLink {
-                    ConservationCenterView(loungeViewModel: loungeViewModel, conversation: conversation)
+                    ConservationCenterView(conversationViewModel: conversationViewModel, conversation: conversation)
                 } label: {
                     
                     HStack(alignment: .center) {
-                        Circle()
-                            .frame(width: 72, height: 72)
-                            .foregroundColor(Color(.lightGray))
-
+                        ZStack {
+                            Circle()
+                                .frame(width: 72, height: 72)
+                                .foregroundColor(Color(hex: Constants.DarkBlueHex))
+                            
+                            VStack {
+                                Text("\(initials((participant(conversation.participants, session.currentUser?.userID ?? "" )?.username ?? "")).firstInitial)\(initials((participant(conversation.participants, session.currentUser?.userID ?? "" )?.username ?? "")).lastInitial)" )
+                                    .foregroundColor(.white)
+                                    .fontWeight(.heavy)
+                                    .font(.title)
+                            }
+                        }
+                        
                         VStack(alignment: .leading) {
-                            Text(conversation.participants.first(where: { participant in
-                                return participant.userId != session.currentUser?.userID ?? ""
-                            })?.username ?? "")
+                            Text(participant(conversation.participants, session.currentUser?.userID ?? "" )?.username ?? "")
                                 .fontWeight(.heavy)
                                 .foregroundColor(Color(hex: 0x333333))
                             Text(conversation.lastSent.message)
@@ -118,50 +178,53 @@ struct LoungeView: View {
                                 .lineLimit(3)
                             
                         }
-                    
+                        
                         Spacer()
                         VStack {
                             Spacer()
-
-                        HStack {
-                            Circle()
-                                .frame(width: 10, height: 10)
-                                .foregroundColor(Color(hex: Constants.DarkBlueHex))
-
-                        Text("2mins")
-                            .font(.caption)
-                            .fontWeight(.light)
-                            .foregroundColor(.gray)
-                        }
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 10)
-                        .overlay(
-                               Capsule()
-                                .stroke(Color.gray, lineWidth: 1.5)
-                           )
-                        .padding(.leading, 1)
-                        .scaleEffect(0.8)
+                            
+                            HStack {
+                                Circle()
+                                    .frame(width: 10, height: 10)
+                                    .foregroundColor(Color(hex: Constants.DarkBlueHex))
+                                
+                                Text("2mins")
+                                    .font(.caption)
+                                    .fontWeight(.light)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 10)
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color.gray, lineWidth: 1.5)
+                            )
+                            .padding(.leading, 1)
+                            .scaleEffect(0.8)
                             Spacer()
-
+                            
                         }
                         
                     }
                     .padding(.horizontal)
                 }
-
+                
                 Divider()
                 
-
+                
             }
             Spacer()
-        }.onFirstAppear {
-                DispatchQueue.main.async {
-                    loungeViewModel.fetchConversations(id: session.currentUser?.userID ?? "")
-                    
+        }.onAppear {
+            DispatchQueue.main.async {
+                loungeViewModel.fetchProfile(userID: session.currentUser?.userID ?? "") { userID in
+                    conversationViewModel.fetchConversations(id: userID)
                 }
+                
+                
             }
         }
-
+    }
+    
 }
 
 struct Lounge_Previews: PreviewProvider {

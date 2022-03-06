@@ -39,12 +39,15 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:1.6.7")
 
 
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                implementation("com.russhwolf:multiplatform-settings-no-arg:0.8.1")
+                implementation("com.russhwolf:multiplatform-settings-serialization:0.8.1")
 
                 implementation("io.ktor:ktor-client-websockets:1.6.7")
                 implementation("io.ktor:ktor-client-serialization:1.6.3")
                 implementation("io.ktor:ktor-client-logging:1.6.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.3.1")
-                implementation("io.insert-koin:koin-core:3.1.4")
+                implementation("io.insert-koin:koin-core:3.1.5")
                 implementation("io.github.reactivecircus.cache4k:cache4k:0.4.0")
 
             }

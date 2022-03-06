@@ -19,6 +19,7 @@
 		8145A59027B7CA3A006E3544 /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = 8145A58F27B7CA3A006E3544 /* Sliders */; };
 		814FF0E927B899DF00934DD4 /* ConservationCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814FF0E827B899DF00934DD4 /* ConservationCenterView.swift */; };
 		815661AB27B8BC3D000EE3AC /* Flow+Publisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815661AA27B8BC3D000EE3AC /* Flow+Publisher.swift */; };
+		8169899827D45F170022D313 /* LoungeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8169899727D45F170022D313 /* LoungeViewModel.swift */; };
 		8183315827B7C61700A26553 /* PeaceWork_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8183315727B7C61700A26553 /* PeaceWork_iOSApp.swift */; };
 		8183315C27B7C61800A26553 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8183315B27B7C61800A26553 /* Assets.xcassets */; };
 		8183315F27B7C61800A26553 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8183315E27B7C61800A26553 /* Preview Assets.xcassets */; };
@@ -53,7 +54,7 @@
 		81D4D78F27B7CE67007B55C3 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4D73A27B7CE67007B55C3 /* AuthViewModel.swift */; };
 		81D4D79027B7CE67007B55C3 /* AuthControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4D73B27B7CE67007B55C3 /* AuthControllerView.swift */; };
 		81D4D79127B7CE67007B55C3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4D73D27B7CE67007B55C3 /* LoginView.swift */; };
-		81D4D79227B7CE67007B55C3 /* LoungeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4D73F27B7CE67007B55C3 /* LoungeViewModel.swift */; };
+		81D4D79227B7CE67007B55C3 /* ConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4D73F27B7CE67007B55C3 /* ConversationViewModel.swift */; };
 		81D4D79327B7CE67007B55C3 /* LoungeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4D74027B7CE67007B55C3 /* LoungeView.swift */; };
 		81D4D79427B7CE67007B55C3 /* ContentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4D74227B7CE67007B55C3 /* ContentWrapper.swift */; };
 		81D4D79527B7CE67007B55C3 /* AuthHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D4D74327B7CE67007B55C3 /* AuthHandler.swift */; };
@@ -101,6 +102,7 @@
 		811A2DA427B8E8B9007E531D /* Publishers+Failures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Failures.swift"; sourceTree = "<group>"; };
 		814FF0E827B899DF00934DD4 /* ConservationCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConservationCenterView.swift; sourceTree = "<group>"; };
 		815661AA27B8BC3D000EE3AC /* Flow+Publisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flow+Publisher.swift"; sourceTree = "<group>"; };
+		8169899727D45F170022D313 /* LoungeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoungeViewModel.swift; sourceTree = "<group>"; };
 		8183315427B7C61700A26553 /* PeaceWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeaceWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8183315727B7C61700A26553 /* PeaceWork_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeaceWork_iOSApp.swift; sourceTree = "<group>"; };
 		8183315B27B7C61800A26553 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,7 +137,7 @@
 		81D4D73A27B7CE67007B55C3 /* AuthViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		81D4D73B27B7CE67007B55C3 /* AuthControllerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthControllerView.swift; sourceTree = "<group>"; };
 		81D4D73D27B7CE67007B55C3 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		81D4D73F27B7CE67007B55C3 /* LoungeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoungeViewModel.swift; sourceTree = "<group>"; };
+		81D4D73F27B7CE67007B55C3 /* ConversationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewModel.swift; sourceTree = "<group>"; };
 		81D4D74027B7CE67007B55C3 /* LoungeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoungeView.swift; sourceTree = "<group>"; };
 		81D4D74227B7CE67007B55C3 /* ContentWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentWrapper.swift; sourceTree = "<group>"; };
 		81D4D74327B7CE67007B55C3 /* AuthHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthHandler.swift; sourceTree = "<group>"; };
@@ -470,8 +472,9 @@
 		81D4D73E27B7CE67007B55C3 /* Lounge */ = {
 			isa = PBXGroup;
 			children = (
-				81D4D73F27B7CE67007B55C3 /* LoungeViewModel.swift */,
 				81D4D74027B7CE67007B55C3 /* LoungeView.swift */,
+				81D4D73F27B7CE67007B55C3 /* ConversationViewModel.swift */,
+				8169899727D45F170022D313 /* LoungeViewModel.swift */,
 				811A2DA127B8E353007E531D /* messaging */,
 			);
 			path = Lounge;
@@ -787,6 +790,7 @@
 				81D4D7A227B7CE67007B55C3 /* AuthBackButtonView.swift in Sources */,
 				81D4D79627B7CE67007B55C3 /* NavBar.swift in Sources */,
 				81D4D7AB27B7CE67007B55C3 /* JobCardView.swift in Sources */,
+				8169899827D45F170022D313 /* LoungeViewModel.swift in Sources */,
 				81D4D7B127B7CE67007B55C3 /* ReelQuestionSection5.swift in Sources */,
 				81D4D78E27B7CE67007B55C3 /* SignupView.swift in Sources */,
 				81D4D77327B7CE67007B55C3 /* View+Swift.swift in Sources */,
@@ -810,7 +814,7 @@
 				81D4D7B727B7CE67007B55C3 /* PortfolioView.swift in Sources */,
 				81D4D7B027B7CE67007B55C3 /* ReelQuestionSection2.swift in Sources */,
 				81D4D79E27B7CE67007B55C3 /* MenuButton.swift in Sources */,
-				81D4D79227B7CE67007B55C3 /* LoungeViewModel.swift in Sources */,
+				81D4D79227B7CE67007B55C3 /* ConversationViewModel.swift in Sources */,
 				81D4D78627B7CE67007B55C3 /* PayRange.swift in Sources */,
 				81D4D78227B7CE67007B55C3 /* PeaceWorkEntry.swift in Sources */,
 				81D4D7B627B7CE67007B55C3 /* PortfolioViewModel.swift in Sources */,

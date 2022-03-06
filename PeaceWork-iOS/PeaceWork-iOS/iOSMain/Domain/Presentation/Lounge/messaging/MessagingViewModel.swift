@@ -9,7 +9,7 @@ import Foundation
 import PeaceWorkSDK
 import Starscream
 
-class MessagingViewModel: MessagingController, WebSocketDelegate,  ObservableObject {
+class MessagingViewModel: MessagingController ,  ObservableObject, WebSocketDelegate {
     var socket: WebSocket!
     @Published var isConnected = false
     @Published var messages: [Message] = []

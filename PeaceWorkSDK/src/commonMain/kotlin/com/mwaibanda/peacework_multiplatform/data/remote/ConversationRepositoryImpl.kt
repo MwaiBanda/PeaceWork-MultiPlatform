@@ -4,12 +4,14 @@ import com.mwaibanda.peacework_multiplatform.main.model.conversation.Conversatio
 import com.mwaibanda.peacework_multiplatform.main.repository.ConversationRepository
 import com.mwaibanda.peacework_multiplatform.data.PeaceWorkRepositoryBase
 import com.mwaibanda.peacework_multiplatform.main.model.conversation.LastSent
+import com.mwaibanda.peacework_multiplatform.main.model.conversation.Participant
 import io.github.reactivecircus.cache4k.Cache
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import kotlinx.datetime.Clock
 
 class ConversationRepositoryImpl(
     private val httpClient: HttpClient,
@@ -26,12 +28,22 @@ class ConversationRepositoryImpl(
         return remoteConversations
     }
 
-    override suspend fun insertConversation(conversation: Conversation) {
+    override suspend fun createConversation(participants: List<Participant>, onCompletion: (Conversation) -> Unit) {
+        val conversation = Conversation(
+            participants = participants,
+            lastSent = LastSent(
+                userId = "",
+                message = "Tap To Message\uD83D\uDCE8",
+                lastSentDate = "",
+                isSeen = false
+            ), timestamp = Clock.System.now().toEpochMilliseconds()
+        )
         val response: HttpResponse = httpClient.post {
             peaceWorkAPI(CONVERSATIONS_ENDPOINT)
             contentType(ContentType.Application.Json)
             body = conversation
         }
+        onCompletion(conversation)
     }
 
     override suspend fun updateLastSent(conversationId: String, lastSent: LastSent) {

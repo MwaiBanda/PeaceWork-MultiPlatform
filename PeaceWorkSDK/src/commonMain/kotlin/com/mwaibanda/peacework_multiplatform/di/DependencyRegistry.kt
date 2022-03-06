@@ -5,6 +5,8 @@ import com.mwaibanda.peacework_multiplatform.data.remote.ConversationRepositoryI
 import com.mwaibanda.peacework_multiplatform.data.remote.JobsRepositoryImpl
 import com.mwaibanda.peacework_multiplatform.data.remote.MessagingRepositoryImpl
 import com.mwaibanda.peacework_multiplatform.data.remote.UserRepositoryImpl
+import com.mwaibanda.peacework_multiplatform.main.model.user.User
+import com.mwaibanda.peacework_multiplatform.main.usecase.conversations.CreateConversationUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.conversations.GetUserConversationsByIdUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.conversations.UpdateLastSentUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.jobs.*
@@ -13,6 +15,7 @@ import com.mwaibanda.peacework_multiplatform.main.usecase.users.DeleteUserUseCas
 import com.mwaibanda.peacework_multiplatform.main.usecase.users.GetUserProfileUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.users.PostUserUseCase
 import com.mwaibanda.peacework_multiplatform.main.usecase.users.UpdateUserProfileUseCase
+import com.russhwolf.settings.Settings
 import io.github.reactivecircus.cache4k.Cache
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -72,12 +75,12 @@ val singletonModule = module {
             }
         }
     }
-    single {
+    single<Cache<String, List<Any>>> {
         Cache.Builder()
             .expireAfterWrite(45.minutes)
-            .build<String, List<Any>>()
+            .build()
     }
-
+    single { Settings() }
 }
 val repositoryModule = module {
     single <JobsRepository> { JobsRepositoryImpl(get(), get()) }
@@ -99,6 +102,7 @@ val useCasesModule: Module = module {
     single { UpdateJobUseCase(get()) }
     single { DeleteJobUseCase(get()) }
     /* CONVERSATION USE CASES */
+    single { CreateConversationUseCase(get()) }
     single { GetUserConversationsByIdUseCase(get()) }
     single { UpdateLastSentUseCase(get()) }
     /* MESSAGING USE CASES */
