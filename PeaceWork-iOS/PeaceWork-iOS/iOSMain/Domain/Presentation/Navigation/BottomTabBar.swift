@@ -24,12 +24,14 @@ struct BottomTabBar: View {
         
         
     }
-    
+    @EnvironmentObject var session: Session
+    @StateObject var loungeViewModel =  LoungeViewModel()
+    @StateObject var conversationViewModel = ConversationViewModel()
     var body: some View {
         TabView {
             NavigationView {
                 ContentWrapper {
-                    LoungeView()
+                    LoungeView(loungeViewModel: loungeViewModel, conversationViewModel: conversationViewModel)
                 }
             }
             .navigationViewStyle(StackNavigationViewStyle())

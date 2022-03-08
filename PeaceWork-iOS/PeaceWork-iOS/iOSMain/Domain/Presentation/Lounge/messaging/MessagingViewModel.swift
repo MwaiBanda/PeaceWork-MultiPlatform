@@ -13,11 +13,12 @@ class MessagingViewModel: MessagingController ,  ObservableObject, WebSocketDele
     var socket: WebSocket!
     @Published var isConnected = false
     @Published var messages: [Message] = []
+    
     func initiateConversation(conversationId: String, username: String, onCompletion: @escaping () -> Void) {
         let base = URL(string: "ws://10.0.0.55:8080/message/\(conversationId)?userId=\(username)")
         guard let url = base else { return print("url fail") }
         var request = URLRequest(url: url)
-        request.timeoutInterval = 5
+        request.timeoutInterval = 15
         socket = WebSocket(request: request)
         socket.delegate = self
         socket.connect()

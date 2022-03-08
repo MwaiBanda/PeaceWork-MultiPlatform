@@ -14,9 +14,13 @@ struct ConservationCenterView: View {
     @StateObject private var messagingViewModel = MessagingViewModel()
     @EnvironmentObject var session: Session
     var conversation: Conversation
+    /* Reminder */
+    // Move to viewModel & Make Array
     var initials: (String) -> (firstInitial: String, lastInitial: String) = { username in
         return (firstInitial: String(username.split(separator: " ").first?.first ?? "\t"), lastInitial: String(username.split(separator: " ").last?.first ?? "\t"))
     }
+    /* Reminder */
+    // Move to viewModel & Make Publishable
     var participant: ( [Participant], String) -> Participant? = { participants, userID in
         return participants.first(where: { participant in
             return participant.userId != userID
@@ -59,10 +63,9 @@ struct ConservationCenterView: View {
                     Spacer()
                     Button {
                         messagingViewModel.sentText(message: message) { clearText in
-                            DispatchQueue.main.async {
-                                conversationViewModel.updateLastSent(conversationId: conversation.id, lastSent: LastSent.init(userId: session.currentUser?.userID ?? "", message: message, lastSentDate: SessionTime.sharedInstance.getTime(format: .yyyy_dd_MM_hh_mm), isSeen: false))
+                                
                                 message = clearText
-                            }
+                            
                         }
                     } label: {
                         Image(systemName: "paperplane.circle.fill")
@@ -90,6 +93,7 @@ struct ConservationCenterView: View {
                 messagingViewModel.updateConversationMessages(conversationId: conversation.id, messages: messagingViewModel.messages)
                 conversationViewModel.clearConversations()
                 conversationViewModel.fetchConversations(id: session.currentUser?.userID ?? "")
+                conversationViewModel.updateLastSent(conversationId: conversation.id, lastSent: LastSent.init(userId: session.currentUser?.userID ?? "", message: message, lastSentDate: SessionTime.sharedInstance.getTime(format: .yyyy_dd_MM_hh_mm), isSeen: false))
             }
         })
         .background(Color(hex: Constants.OffWhiteHex).ignoresSafeArea(.all))

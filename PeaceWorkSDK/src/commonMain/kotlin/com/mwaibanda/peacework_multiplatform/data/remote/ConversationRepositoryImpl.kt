@@ -22,7 +22,9 @@ class ConversationRepositoryImpl(
         val cachedConversations: List<Conversation> = cache.get(CONVERSATIONS_KEY).orEmpty()
         if (cachedConversations.isNotEmpty()) return cachedConversations
         val remoteConversations: List<Conversation> =  httpClient.get {
-            peaceWorkAPI("$CONVERSATIONS_ENDPOINT?userId=$id")
+            peaceWorkAPI(CONVERSATIONS_ENDPOINT)
+            parameter("userId", id)
+
         }
         cache.put(CONVERSATIONS_KEY, remoteConversations)
         return remoteConversations
@@ -40,6 +42,7 @@ class ConversationRepositoryImpl(
         )
         val response: HttpResponse = httpClient.post {
             peaceWorkAPI(CONVERSATIONS_ENDPOINT)
+            parameter("userId", participants.first().userId)
             contentType(ContentType.Application.Json)
             body = conversation
         }
@@ -57,7 +60,10 @@ class ConversationRepositoryImpl(
                 append("userId", lastSent.userId)
 
             }
-        ) { method = HttpMethod.Put }
+        ) {
+            method = HttpMethod.Put
+            parameter("userId", lastSent.userId)
+        }
     }
 
     override suspend fun deleteConversation(conversationId: String) {

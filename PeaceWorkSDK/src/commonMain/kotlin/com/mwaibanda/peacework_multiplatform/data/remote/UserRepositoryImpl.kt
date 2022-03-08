@@ -52,6 +52,7 @@ class UserRepositoryImpl(
         if (cachedJobs != null) return cachedJobs as User
         val profile: User = httpClient.get {
             peaceWorkAPI("/users/$userID")
+            parameter("userId", userID)
         }
         cache.encodeValue(User.serializer(), PROFILE_KEY, profile)
 

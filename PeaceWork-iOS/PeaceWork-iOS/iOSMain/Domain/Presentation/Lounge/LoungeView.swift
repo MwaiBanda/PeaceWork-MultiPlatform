@@ -8,19 +8,30 @@
 import SwiftUI
 import PeaceWorkSDK
 struct LoungeView: View {
-    @StateObject var loungeViewModel = LoungeViewModel()
-    @StateObject var conversationViewModel = ConversationViewModel()
+    @ObservedObject var loungeViewModel: LoungeViewModel
+    @ObservedObject var conversationViewModel: ConversationViewModel
     @EnvironmentObject var session: Session
+    /* Reminder */
+    // Move to viewModel & Make Array
     var username: (String) -> (firstname: String, lastInitial: String) = { username in
         return (firstname: String(username.prefix(while: { return $0 != " " })), lastInitial: String(username.split(separator: " ").last?.first ?? "\t"))
     }
+    /* Reminder */
+    // Move to viewModel & Make Array
     var initials: (String) -> (firstInitial: String, lastInitial: String) = { username in
         return (firstInitial: String(username.split(separator: " ").first?.first ?? "\t"), lastInitial: String(username.split(separator: " ").last?.first ?? "\t"))
     }
+    /* Reminder */
+    // Move to viewModel & Make Publishable
     var participant: ( [Participant], String) -> Participant? = { participants, userID in
         return participants.first(where: { participant in
             return participant.userId != userID
         })
+    }
+    init (loungeViewModel: LoungeViewModel, conversationViewModel: ConversationViewModel ){
+        self.loungeViewModel = loungeViewModel
+        self.conversationViewModel = conversationViewModel
+       
     }
     var body: some View {
         VStack {
@@ -62,6 +73,11 @@ struct LoungeView: View {
                             .foregroundColor(Color(hex: Constants.DarkBlueHex))
                             .padding(.horizontal)
                     }
+                }
+            }
+            .onAppear {
+                loungeViewModel.fetchProfile(userID: session.currentUser?.userID ?? "") { [self] userID in
+                    self.conversationViewModel.fetchConversations(id: userID)
                 }
             }
             ScrollView(.horizontal, showsIndicators: false){
@@ -214,21 +230,10 @@ struct LoungeView: View {
                 
             }
             Spacer()
-        }.onAppear {
-            DispatchQueue.main.async {
-                loungeViewModel.fetchProfile(userID: session.currentUser?.userID ?? "") { userID in
-                    conversationViewModel.fetchConversations(id: userID)
-                }
-                
-                
-            }
         }
+        
     }
     
 }
 
-struct Lounge_Previews: PreviewProvider {
-    static var previews: some View {
-        LoungeView()
-    }
-}
+

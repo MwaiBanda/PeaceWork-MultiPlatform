@@ -18,7 +18,9 @@ class JobsRepositoryImpl(
         val cachedJobs: List<Job> = cache.get(id).orEmpty()
         if (cachedJobs.isNotEmpty()) return cachedJobs
         val remoteJobs: List<Job> = httpClient.get {
-            peaceWorkAPI("/jobs/user/$id?userId=$id")
+            peaceWorkAPI("/jobs/user/$id")
+            parameter("userId", id)
+
         }
         cache.put(id, remoteJobs)
         return remoteJobs
